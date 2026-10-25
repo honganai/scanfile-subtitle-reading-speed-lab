@@ -1,0 +1,11 @@
+Archive notes — Subtitle reading-speed lab
+
+This is an AI-assisted, MIT-licensed educational browser example maintained by Scanfile contributors. It compares text counts and display durations in basic SRT cues. It does not provide transcription, translation, semantic accuracy assessment or a validated accessibility score. The default threshold is a demonstration value, not an audience reading standard.
+
+Open index.html with style.css and reading-speed.js alongside it. There is no build step or external dependency. Logic checks are included in reading-speed.test.cjs and can be run with Node.js 20 or later. The source calculation makes no network calls. This statement does not cover a hosting service's own logs or analytics.
+
+The example includes synthetic dialogue and test cases. It contains no customer subtitles, media, production records or personal research data. Files and their MIT notice are preserved unchanged from the existing source package. Both English and Chinese documentation are included.
+
+An earlier web demonstration was accepted on 21 October 2026. This is a source archive with additional documentation, not a claim of a newly invented tool, a first-ever publication or a presently accessible old demo. The source was assembled for this archival distribution on 24 October 2026.
+
+The creator is the Scanfile contributors organisation/group, as recorded in the existing MIT copyright notice. No individual is represented as a researcher, developer, teacher or study participant. The related commercial translation service, Scanfile, remains a separate service; the MIT licence covers this example only. There is no claim of CERN/Zenodo endorsement, peer review, grants, institutional affiliation or verified viewer-performance results.

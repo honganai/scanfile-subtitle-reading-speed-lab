@@ -1,0 +1,22 @@
+const assert = require('node:assert/strict');
+const { analyse, clock, clean, count, sample } = require('./reading-speed.js');
+let checks = 0;
+function check(name, fn) { fn(); checks++; process.stdout.write('PASS ' + name + '\n'); }
+const cue = text => '1\n00:00:00,000 --> 00:00:02,000\n' + text;
+check('seconds and literal space/punctuation count', () => { const r = analyse(cue('Hello world.'), 20).rows[0]; assert.equal(r.seconds, 2); assert.equal(r.characters, 12); assert.equal(r.cps, 6); });
+check('chosen threshold boundary is not rounded', () => { assert.equal(analyse(cue('abcde'), 2.5).rows[0].above, false); assert.equal(analyse(cue('abcde'), 2.49).rows[0].above, true); });
+check('synthetic sample includes crowded and invalid cases', () => { const r = analyse(sample, 20); assert.equal(r.rows.length, 3); assert.equal(r.errors.length, 1); assert.equal(r.rows.filter(x => x.above).length, 1); });
+check('CJK and joined emoji are graphemes', () => { assert.equal(count('你好 👩‍💻'), 4); assert.equal(count('e\u0301'), 1); });
+check('BOM CRLF and multiline dialogue', () => { const r = analyse('\uFEFF' + cue('first\nsecond').replaceAll('\n', '\r\n'), 20); assert.equal(r.rows[0].text, 'first second'); });
+check('cue numbers may be omitted', () => assert.equal(analyse(cue('hello').slice(2), 20).rows.length, 1));
+check('formatting tags are not dialogue characters', () => assert.equal(clean('<i>hello</i> <font color="red">world</font>'), 'hello world'));
+check('entities decode once without evaluating HTML', () => assert.equal(clean('&lt;script&gt; &amp;lt; &#x1F600;'), '<script> &lt; 😀'));
+check('invalid numeric entities remain literal', () => assert.equal(clean('&#x110000; &#xD800;'), '&#x110000; &#xD800;'));
+check('literal comparison brackets remain text', () => assert.equal(clean('a < b and c > d'), 'a < b and c > d'));
+check('bad minutes are rejected', () => { assert.equal(clock('00:60:00,000'), null); assert.equal(analyse('1\n00:60:00,000 --> 01:00:02,000\nx', 20).errors.length, 1); });
+check('zero and reversed durations are rejected', () => { for (const end of ['00:00:01,000', '00:00:00,000']) assert.equal(analyse('1\n00:00:01,000 --> ' + end + '\nx', 20).rows.length, 0); });
+check('empty and formatting-only dialogue are reported', () => { assert.equal(analyse('', 20).errors.length, 1); assert.equal(analyse(cue('<i></i>'), 20).rows.length, 0); });
+check('malformed block does not hide later valid cues', () => { const r = analyse('bad block\n\n' + cue('hello'), 20); assert.equal(r.rows.length, 1); assert.equal(r.errors.length, 1); });
+check('hour ranges and dot milliseconds', () => { assert.equal(clock('100:00:00.250'), 360000250); assert.equal(clock('00:00:00,001'), 1); });
+check('invalid thresholds and oversized input do not yield results', () => { for (const n of [0, 81, NaN, Infinity, '']) assert.throws(() => analyse(cue('x'), n)); assert.throws(() => analyse('x'.repeat(250001), 20)); });
+process.stdout.write(checks + ' meaningful checks passed.\n');

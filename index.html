@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Subtitle reading-speed lab · Scanfile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <p class="eyebrow">A SMALL, OPEN WEB EXPERIMENT</p>
+  <h1>Subtitle reading-speed lab</h1>
+  <p>Paste SRT cues to compare visible character counts with their display time.</p>
+  <label for="cues">SRT subtitle text</label>
+  <textarea id="cues" rows="12" maxlength="250000" spellcheck="false"></textarea>
+  <div class="actions">
+    <label for="limit">Highlight above <input id="limit" type="number" min="1" max="80" step="1" value="20"> characters / second</label>
+    <button id="analyse" type="button">Analyse cues</button>
+    <button id="example" type="button" class="secondary">Load synthetic example</button>
+  </div>
+  <p class="hint">Choose a threshold for your own audience. The default is a demonstration value, not a universal reading standard.</p>
+  <p id="summary" role="status" aria-live="polite"></p>
+  <ul id="errors" class="errors"></ul>
+  <div class="table-wrap"><table>
+    <caption>Cue reading speeds</caption>
+    <thead><tr><th>Cue</th><th>Text</th><th>Seconds</th><th>Characters</th><th>Chars / sec</th><th>Chosen threshold</th></tr></thead>
+    <tbody id="results"></tbody>
+  </table></div>
+  <details><summary>How the count works</summary>
+    <p>Basic SRT timestamps are required. Cue numbers are optional. Line breaks become spaces; repeated whitespace is collapsed. Common b, i, u and font tags are removed, and common text entities are decoded once. Other markup remains text.</p>
+    <p>Unicode grapheme clusters are counted where Intl.Segmenter is available; otherwise the counter uses Unicode code points. Spaces and punctuation count. Invalid timestamps, nonpositive durations and empty dialogue are reported separately.</p>
+    <p>This examines timing and text length, not translation accuracy. Text stays in this demo; its code makes no network requests.</p>
+  </details>
+  <footer>
+    <p>Original, AI-assisted example by Scanfile. Code is MIT-licensed. The sample is synthetic.</p>
+    <p><a href="https://scanfile.online/" target="_blank" rel="noopener noreferrer">Scanfile · translate supported subtitle files online</a> uses one-time credits; sample and preview availability depends on format and eligibility.</p>
+  </footer>
+</main>
+<script src="reading-speed.js"></script>
+</body>
+</html>
