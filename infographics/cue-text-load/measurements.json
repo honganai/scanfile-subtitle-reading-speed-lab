@@ -1,0 +1,50 @@
+{
+  "kind": "synthetic_illustrative_text_not_a_benchmark_or_user_study",
+  "duration_seconds": 2,
+  "counting": "Unicode grapheme clusters; spaces and punctuation included; these phrases contain no formatting markup.",
+  "limits": "Selected English/German examples demonstrate arithmetic only, not typical language expansion, translation accuracy, a readability threshold or accessibility certification.",
+  "rows": [
+    {
+      "en": {
+        "text": "Try again.",
+        "graphemes": 10,
+        "duration_seconds": 2,
+        "graphemes_per_second": 5
+      },
+      "de": {
+        "text": "Versuche es noch einmal.",
+        "graphemes": 24,
+        "duration_seconds": 2,
+        "graphemes_per_second": 12
+      }
+    },
+    {
+      "en": {
+        "text": "Save the file.",
+        "graphemes": 14,
+        "duration_seconds": 2,
+        "graphemes_per_second": 7
+      },
+      "de": {
+        "text": "Speichere die Datei.",
+        "graphemes": 20,
+        "duration_seconds": 2,
+        "graphemes_per_second": 10
+      }
+    },
+    {
+      "en": {
+        "text": "Done.",
+        "graphemes": 5,
+        "duration_seconds": 2,
+        "graphemes_per_second": 2.5
+      },
+      "de": {
+        "text": "Fertig.",
+        "graphemes": 7,
+        "duration_seconds": 2,
+        "graphemes_per_second": 3.5
+      }
+    }
+  ]
+}
